@@ -190,7 +190,8 @@ export interface ProcessedPerpMarket {
   change24h: number
   changePercent24h: number
   volume24h: number
-  openInterest: number | null
+  openInterest: number | null    // USD value (calculated)
+  openInterestNative: number | null // Native asset value (original)
   funding8h: number | null
   maxLeverage: number
   szDecimals: number

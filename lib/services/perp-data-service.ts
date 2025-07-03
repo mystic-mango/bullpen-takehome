@@ -65,7 +65,8 @@ export class PerpDataService {
           return {
             ...market,
             lastPrice: price,
-            markPrice: price // Update mark price too since they're usually the same from mids
+            markPrice: price, // Update mark price too since they're usually the same from mids
+            openInterest: market.openInterestNative !== null ? market.openInterestNative * price : null // Recalculate USD value
           }
         }
       }
@@ -139,7 +140,7 @@ export class PerpDataService {
 
   private async performFetch(): Promise<void> {
     try {
-      console.log('PerpDataService: Fetching fresh data from API')
+      console.log('PerpDataService: Fetching fresh data from API (weight: 20)')
       const markets = await hyperliquidAPI.getPerpetualMarkets()
       
       this.markets = markets

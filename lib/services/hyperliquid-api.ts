@@ -8,7 +8,7 @@ import type {
   ProcessedSpotMarket
 } from '../types/hyperliquid-types'
 
-import { TokenBucket } from './token-bucket'
+import { TokenBucket, type RequestType } from './token-bucket'
 import { getAssetDisplayName } from './asset-display-names'
 
 export class HyperliquidAPIError extends Error {
@@ -27,9 +27,13 @@ export class HyperliquidAPI {
   private timeout = 10000 // 10 seconds
   private rateLimiter = new TokenBucket()
 
-  private async makeRequest<T>(endpoint: string, body: Record<string, unknown>): Promise<T> {
-    // Wait for rate limit token before making request
-    await this.rateLimiter.waitForToken()
+  private async makeRequest<T>(
+    endpoint: string, 
+    body: Record<string, unknown>,
+    requestType: RequestType = 'info'
+  ): Promise<T> {
+    // Wait for rate limit tokens based on request type
+    await this.rateLimiter.waitForTokens(requestType)
 
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), this.timeout)
@@ -85,19 +89,19 @@ export class HyperliquidAPI {
   async getMetaAndAssetCtxs(): Promise<MetaAndAssetCtxsResponse> {
     return this.makeRequest<MetaAndAssetCtxsResponse>('/info', {
       type: 'metaAndAssetCtxs'
-    })
+    }, 'info') // Weight 20
   }
 
   async getSpotMeta(): Promise<SpotMeta> {
     return this.makeRequest<SpotMeta>('/info', {
       type: 'spotMeta'
-    })
+    }, 'info') // Weight 20
   }
 
   async getSpotMetaAndAssetCtxs(): Promise<SpotMetaAndAssetCtxsResponse> {
     const response = await this.makeRequest<SpotMetaAndAssetCtxsResponse>('/info', {
       type: 'spotMetaAndAssetCtxs'
-    })
+    }, 'info') // Weight 20
     return response
   }
 
@@ -196,7 +200,8 @@ export class HyperliquidAPI {
         changePercent24h,
         volume24h,
         funding8h: funding,
-        openInterest,
+        openInterest: openInterest * markPrice, // USD value (calculated)
+        openInterestNative: openInterest, // Native asset value (original)
         maxLeverage: asset.maxLeverage,
         szDecimals: asset.szDecimals,
         onlyIsolated: asset.onlyIsolated || false,

@@ -150,7 +150,7 @@ export class SpotDataService {
 
   private async performFetch(): Promise<void> {
     try {
-      console.log('SpotDataService: Fetching fresh data from API')
+      console.log('SpotDataService: Fetching fresh data from API (weight: 20)')
       const markets = await hyperliquidAPI.getSpotMarkets()
       console.log('SpotDataService: Received fresh markets:', markets.length)
       
@@ -245,11 +245,7 @@ export class SpotDataService {
       .slice(0, limit)
   }
 
-  getMarketsByQuote(quoteToken: string = 'USDC'): ProcessedSpotMarket[] {
-    return this.markets.filter(market => 
-      market.pair.endsWith(`/${quoteToken}`)
-    )
-  }
+
 
   // Cleanup
   destroy(): void {
