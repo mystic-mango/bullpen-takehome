@@ -91,14 +91,21 @@ bun run dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Storybook
+All major components have been showcased using Storybook for enhanced documentation.
 
 To run Storybook:
 ```bash
 bun run storybook
 ```
 Open http://localhost:6006 with your browser to see the showcase of components
+<img width="1920" alt="Screenshot 2025-07-03 at 19 43 08" src="https://github.com/user-attachments/assets/83e4cdd9-9a2e-4e0f-9e51-440f1df3c1d1" />
 
+## Screenshots
 
+<img width="1920" alt="Screenshot 2025-07-03 at 19 42 49" src="https://github.com/user-attachments/assets/2dc79a9a-31e4-48e2-86b8-b9ba1f403f71" />
+<img width="389" alt="Screenshot 2025-07-03 at 19 50 18" src="https://github.com/user-attachments/assets/60021957-c970-488d-87ed-57131180a7a8" />
+<img width="388" alt="Screenshot 2025-07-03 at 19 50 39" src="https://github.com/user-attachments/assets/d7906b97-cfba-4269-843d-30af7b1fc744" />
+<img width="810" alt="Screenshot 2025-07-03 at 19 51 07" src="https://github.com/user-attachments/assets/be8d9e29-aac5-4caf-aaaa-e875fc41767f" />
 
 ## Future Tasks
 - Add an feed from CoinGecko API / CoinMarketCap API for social +website links. The components are built as you can see from the storyboard, but social links are not supported from Hyperliquid API.
