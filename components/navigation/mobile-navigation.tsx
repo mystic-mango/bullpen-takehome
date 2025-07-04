@@ -3,6 +3,7 @@
 import * as React from "react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
+import { Suspense } from "react"
 import { BarChartIcon } from "@/components/icons/bar-chart"
 import { PerpsIcon } from "@/components/icons/perps"
 import { SearchIcon } from "@/components/icons/search"
@@ -32,7 +33,7 @@ function MobileNavItem({ icon, label, href, active = false }: MobileNavItemProps
   )
 }
 
-export function MobileNavigation() {
+function MobileNavigationContent() {
   const pathname = usePathname()
   
   // Determine active state based on current route
@@ -82,5 +83,24 @@ export function MobileNavigation() {
         />
       </div>
     </div>
+  )
+}
+
+export function MobileNavigation() {
+  return (
+    <Suspense fallback={
+      <div className="backdrop-blur-[2px] bg-background border-t border-muted h-14 flex items-center justify-center px-6">
+        <div className="flex w-full items-center justify-between">
+          {/* Fallback navigation items without active state */}
+          <MobileNavItem icon={<BarChartIcon />} label="Solana" href="/solana" />
+          <MobileNavItem icon={<PerpsIcon />} label="Perps" href="/" />
+          <MobileNavItem icon={<SearchIcon />} label="Search" href="/search" />
+          <MobileNavItem icon={<Wallet2Icon />} label="Wallet" href="/wallet" />
+          <MobileNavItem icon={<GiftIcon />} label="Rewards" href="/rewards" />
+        </div>
+      </div>
+    }>
+      <MobileNavigationContent />
+    </Suspense>
   )
 }
