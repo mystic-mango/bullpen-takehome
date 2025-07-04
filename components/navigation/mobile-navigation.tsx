@@ -22,10 +22,10 @@ function MobileNavItem({ icon, label, href, active = false }: MobileNavItemProps
       href={href}
       className="flex flex-col items-center justify-center h-14 flex-1 gap-1 p-2"
     >
-      <div className={`w-5 h-5 ${active ? 'text-[#4FFFAB]' : 'text-[#B3B9BE]'}`}>
+      <div className={`w-5 h-5 ${active ? 'text-primary' : 'text-foreground'}`}>
         {icon}
       </div>
-      <span className={`font-favorit text-[12px] leading-4 ${active ? 'text-[#4FFFAB]' : 'text-[#B3B9BE]'}`}>
+      <span className={`font-favorit text-[12px] leading-4 ${active ? 'text-primary' : 'text-foreground'}`}>
         {label}
       </span>
     </Link>
@@ -48,7 +48,7 @@ export function MobileNavigation() {
   const activeState = getActiveState()
 
   return (
-    <div className="backdrop-blur-[2px] bg-[#06121b] border-t border-[#0d2535] h-14 flex items-center justify-center px-6">
+    <div className="backdrop-blur-[2px] bg-background border-t border-muted h-14 flex items-center justify-center px-6">
       <div className="flex w-full items-center justify-between">
         <MobileNavItem
           icon={<BarChartIcon />}
